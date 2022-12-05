@@ -20,8 +20,8 @@ func check(e error) {
 func main() {
 
 	// Read File
+	// readFile, err := os.Open("input-example")
 	readFile, err := os.Open("input")
-	// readFile, err := os.Open("input")
 
 	if err != nil {
 		fmt.Println(err)
@@ -70,15 +70,16 @@ func main() {
 			rx = regexp.MustCompile(`(?s)` + regexp.QuoteMeta(left) + `(.*?)\z`)
 			matches = rx.FindAllStringSubmatch(line, -1)
 			to, _ := strconv.Atoi(matches[0][1])
-			fmt.Printf("Move %v from %v to %v", amount, from, to)
+			fmt.Printf("Move %v from %v to %v\n", amount, from, to)
 
 			// Rearange
-			for i := 1; i <= amount; i++ {
-				indexFrom := len(crates[from]) - 1
-				crates[to] = append(crates[to], crates[from][indexFrom])
-				crates[from] = crates[from][:indexFrom]
-			}
-			fmt.Printf("Move:\n")
+
+			indexFrom := len(crates[from]) - amount
+			// sub := make([]rune, len(crates[to])+amount)
+			sub := crates[from][indexFrom:len(crates[from])]
+			crates[to] = append(crates[to], sub...)
+			crates[from] = crates[from][:indexFrom]
+
 			printCrates(crates)
 		}
 
