@@ -29,24 +29,41 @@ func main() {
 
 		checkerMap := make(map[string]bool)
 
+		// Part Two
+		var breaker bool
 		checkerMap[one] = true
-		if _, ok := checkerMap[two]; ok {
-			// do nothing :=)
-		} else {
-			checkerMap[two] = true
-			if _, ok := checkerMap[three]; ok {
-				// do nothing :=)
+		for j := 1; j < 14; j++ {
+			if _, ok := checkerMap[string(data[i+j:i+j+1])]; ok {
+				breaker = true
+				break
 			} else {
-				checkerMap[three] = true
-				if _, ok := checkerMap[four]; ok {
-					// do nothing :=)
-				} else {
-					checkerMap[four] = true
-					result = i + 4
-					break
-				}
+				checkerMap[string(data[i+j:i+j+1])] = true
 			}
 		}
+		if !breaker {
+			result = i + 14
+			break
+		}
+
+		// Part One
+		// checkerMap[one] = true
+		// if _, ok := checkerMap[two]; ok {
+		// 	// do nothing :=)
+		// } else {
+		// 	checkerMap[two] = true
+		// 	if _, ok := checkerMap[three]; ok {
+		// 		// do nothing :=)
+		// 	} else {
+		// 		checkerMap[three] = true
+		// 		if _, ok := checkerMap[four]; ok {
+		// 			// do nothing :=)
+		// 		} else {
+		// 			checkerMap[four] = true
+		// 			result = i + 4
+		// 			break
+		// 		}
+		// 	}
+		// }
 
 	}
 	fmt.Printf("result: %v\n", result)
